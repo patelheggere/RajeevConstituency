@@ -38,7 +38,6 @@ public class WorkStatusFragment extends BaseFragment {
     private Button btnSubmit;
     private int type;
 
-
     public WorkStatusFragment() {
         // Required empty public constructor
     }
