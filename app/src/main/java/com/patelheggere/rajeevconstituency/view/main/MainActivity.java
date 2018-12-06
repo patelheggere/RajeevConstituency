@@ -40,7 +40,7 @@ public class MainActivity extends BaseActivity implements WorkStatusFragment.OnF
                     }
                     Fragment fragment = fragmentManager.findFragmentByTag("HOME");
                     if (fragment == null) {
-                        fragment = new WorkStatusFragment();
+                        fragment = new NewsFragment();
                         fragmentTransaction.add(R.id.contentFrame, fragment, "HOME");
                     } else {
                         fragmentTransaction.attach(fragment);
@@ -99,6 +99,7 @@ public class MainActivity extends BaseActivity implements WorkStatusFragment.OnF
     protected void initView() {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setSelectedItemId(R.id.navigation_home);
     }
 
     @Override

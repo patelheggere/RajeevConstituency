@@ -3,18 +3,42 @@ package com.patelheggere.rajeevconstituency.view.main.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.patelheggere.rajeevconstituency.R;
+import com.patelheggere.rajeevconstituency.adapter.NewsAdapter;
 import com.patelheggere.rajeevconstituency.base.BaseFragment;
+import com.patelheggere.rajeevconstituency.model.NewsModel;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class NewsFragment extends BaseFragment {
 
     private OnFragmentInteractionListener mListener;
 
+    private static final String TAG = "NewsFragment";
     private View mView;
+    private RecyclerView mRecyclerViewNews;
+    private DatabaseReference databaseReference;
+    private List<NewsModel> newsModelList;
+    private NewsAdapter mNewsAdapter;
 
     public NewsFragment() {
         // Required empty public constructor
@@ -42,8 +66,45 @@ public class NewsFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mView =  inflater.inflate(R.layout.fragment_work_status, container, false);
+        mView =  inflater.inflate(R.layout.fragment_news_layout, container, false);
+        initViews();
+        getData();
         return mView;
+    }
+
+    private void getData() {
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("News").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                newsModelList = new ArrayList<>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                {
+                    try {
+                        NewsModel model = snapshot.getValue(NewsModel.class);
+                        newsModelList.add(model);
+                    }catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+                Collections.reverse(newsModelList);
+                mNewsAdapter = new NewsAdapter(mActivity, newsModelList);
+                mRecyclerViewNews.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
+                mRecyclerViewNews.setAdapter(mNewsAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void initViews() {
+        newsModelList = new ArrayList<>();
+        mRecyclerViewNews = mView.findViewById(R.id.recyclerViewNews);
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

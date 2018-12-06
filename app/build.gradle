@@ -58,5 +58,7 @@ dependencies {
     implementation "com.google.firebase:firebase-database:$rootProject.firebaseDatabase"
     implementation "com.google.firebase:firebase-auth:$rootProject.firebaseAuth"
     implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintLayout"
+    implementation "com.squareup.picasso:picasso:$rootProject.picasso"
     apply plugin: 'com.google.gms.google-services'
+    com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true
 }
