@@ -3,6 +3,7 @@ package com.patelheggere.rajeevconstituency;
 import android.app.Application;
 import android.content.SharedPreferences;
 
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -13,6 +14,7 @@ public class RajeevApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
+        FirebaseApp.initializeApp(this);
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         // ApiClient.intialise();
@@ -28,6 +30,7 @@ public class RajeevApplication extends Application {
     }
     public static synchronized DatabaseReference getFireBaseRef()
     {
+
         //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         if(BuildConfig.DEBUG) {
             databaseReference = FirebaseDatabase.getInstance().getReference().child("test");
