@@ -3,15 +3,13 @@ package com.patelheggere.rajeevconstituency.view.main.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.patelheggere.rajeevconstituency.R;
+import com.patelheggere.rajeevconstituency.RajeevApplication;
 import com.patelheggere.rajeevconstituency.adapter.NewsAdapter;
 import com.patelheggere.rajeevconstituency.base.BaseFragment;
 import com.patelheggere.rajeevconstituency.model.NewsModel;
@@ -26,8 +25,6 @@ import com.patelheggere.rajeevconstituency.model.NewsModel;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class NewsFragment extends BaseFragment {
 
@@ -73,7 +70,7 @@ public class NewsFragment extends BaseFragment {
     }
 
     private void getData() {
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference = RajeevApplication.getFireBaseRef();
         databaseReference.child("News").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.patelheggere.rajeevconstituency"
         minSdkVersion 19
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         javaCompileOptions {
             annotationProcessorOptions {
                 includeCompileClasspath = true
@@ -27,18 +27,18 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
-    implementation "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
-    implementation "com.android.support:design:$rootProject.supportDesignLib"
-    implementation "com.android.support:support-vector-drawable:$rootProject.supportLibraryVersion"
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
     // VectorDrawableCompat
-    implementation "com.android.support:animated-vector-drawable:$rootProject.supportLibraryVersion"
+    implementation 'androidx.vectordrawable:vectordrawable-animated:1.1.0'
     // AnimatedVectorDrawableCompat
-    implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutLibVersion"
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
     //implementation "com.google.android.material:material:$rootProject.materialLibVersion"
-    implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
-    implementation "com.android.support:support-v4:$rootProject.supportLibraryVersion"
-    implementation "com.android.support.test.espresso:espresso-idling-resource:$rootProject.espressoVersion"
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.test.espresso:espresso-idling-resource:3.3.0'
 
     //ntework library
     implementation("com.squareup.retrofit2:retrofit:${rootProject.ext.retrofitLibVersion}") {
@@ -50,14 +50,13 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:${rootProject.ext.okhttpLibVersion}"
     implementation "com.squareup.okhttp3:okhttp:${rootProject.ext.okhttpLibVersion}"
 
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.multidex:multidex:2.0.1'
 
     implementation "de.hdodenhof:circleimageview:$rootProject.circleImageLibVer"
 
     implementation "com.google.firebase:firebase-storage:$rootProject.firebaseStorage"
     implementation "com.google.firebase:firebase-database:$rootProject.firebaseDatabase"
     implementation "com.google.firebase:firebase-auth:$rootProject.firebaseAuth"
-    implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintLayout"
     implementation "com.squareup.picasso:picasso:$rootProject.picasso"
     apply plugin: 'com.google.gms.google-services'
     com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true
