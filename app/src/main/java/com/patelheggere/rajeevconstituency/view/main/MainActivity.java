@@ -13,11 +13,14 @@ import android.widget.TextView;
 
 import com.patelheggere.rajeevconstituency.R;
 import com.patelheggere.rajeevconstituency.base.BaseActivity;
+import com.patelheggere.rajeevconstituency.view.main.fragments.ContactsFragment;
 import com.patelheggere.rajeevconstituency.view.main.fragments.NewsFragment;
 import com.patelheggere.rajeevconstituency.view.main.fragments.NotificationFragment;
 import com.patelheggere.rajeevconstituency.view.main.fragments.WorkStatusFragment;
 
-public class MainActivity extends BaseActivity implements WorkStatusFragment.OnFragmentInteractionListener, NotificationFragment.OnFragmentInteractionListener, NewsFragment.OnFragmentInteractionListener{
+public class MainActivity extends BaseActivity implements WorkStatusFragment.OnFragmentInteractionListener,
+        NotificationFragment.OnFragmentInteractionListener,
+        NewsFragment.OnFragmentInteractionListener, ContactsFragment.OnFragmentInteractionListener{
 
     private static final String TAG = "MainActivity";
     private TextView mTextMessage;
@@ -82,6 +85,23 @@ public class MainActivity extends BaseActivity implements WorkStatusFragment.OnF
                         fragmentTransaction.commitNowAllowingStateLoss();
                         //mTextMessage.setText(R.string.title_notifications);
                         return true;
+
+                case R.id.navigation_contacts:
+                    if (curFrag != null) {
+                        fragmentTransaction.detach(curFrag);
+                    }
+                    fragment = fragmentManager.findFragmentByTag("NOTI");
+                    if (fragment == null) {
+                        fragment = new ContactsFragment();
+                        fragmentTransaction.add(R.id.contentFrame, fragment, "NOTI");
+                    } else {
+                        fragmentTransaction.attach(fragment);
+                    }
+                    fragmentTransaction.setPrimaryNavigationFragment(fragment);
+                    fragmentTransaction.setReorderingAllowed(true);
+                    fragmentTransaction.commitNowAllowingStateLoss();
+                    //mTextMessage.setText(R.string.title_notifications);
+                    return true;
 
             }
             return false;
