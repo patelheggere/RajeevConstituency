@@ -2,6 +2,9 @@ package com.patelheggere.rajeevconstituency.network;
 
 
 import com.patelheggere.rajeevconstituency.model.BeneficiaryModel;
+import com.patelheggere.rajeevconstituency.model.VillageModel;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -36,6 +39,12 @@ public interface ApiInterface {
 
     @GET("beneficiary/getByEPIC.php")
     Call<BeneficiaryModel> getByEPIC(@Query("epic") String epic);
+
+    @GET("beneficiary/GetAllVillage.php")
+    Call<List<VillageModel>> getVillage(@Query("id") String id, @Query("type") String type);
+
+    @GET("beneficiary/GetAllBeneficiary.php")
+    Call<List<BeneficiaryModel>> getByDataByVillage(@Query("village") String id);
 
 
 }
