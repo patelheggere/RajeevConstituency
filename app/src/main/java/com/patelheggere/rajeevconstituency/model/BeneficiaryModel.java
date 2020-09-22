@@ -10,6 +10,7 @@ public class BeneficiaryModel implements Parcelable {
     private String mobile;
     private String village;
     private String status;
+    private String designation;
 
     public BeneficiaryModel() {
     }
@@ -105,5 +106,13 @@ public class BeneficiaryModel implements Parcelable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
     }
 }

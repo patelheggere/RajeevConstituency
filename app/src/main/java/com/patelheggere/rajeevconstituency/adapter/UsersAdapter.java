@@ -63,7 +63,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.MyViewHolder
         return position;
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView time, phone, url, name;
+        TextView time, phone, url, name, desi;
         ImageView imageView;
         private LinearLayout mShareCommentLayout;
         private LinearLayout mLinearLayoutLike, mLinearLayoutComment, mLinearLayoutShare, mLinearLayoutPlace;
@@ -75,6 +75,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.MyViewHolder
             phone = (TextView)itemView.findViewById(R.id.textViewPhone);
             name = (TextView)itemView.findViewById(R.id.textViewName);
             imageView = itemView.findViewById(R.id.textCall);
+            desi = itemView.findViewById(R.id.desi);
         }
     }
 
@@ -90,6 +91,15 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.MyViewHolder
             final BeneficiaryModel dataModel = dataModelList.get(position);
             holder.name.setText(dataModel.getName());
             holder.phone.setText(dataModel.getMobile());
+            if(dataModel.getDesignation()!=null)
+            {
+                holder.desi.setText(dataModel.getDesignation());
+                holder.desi.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                holder.desi.setVisibility(View.GONE);
+            }
             holder.imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

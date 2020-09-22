@@ -45,6 +45,8 @@ public interface ApiInterface {
 
     @GET("beneficiary/GetAllBeneficiary.php")
     Call<List<BeneficiaryModel>> getByDataByVillage(@Query("village") String id);
+    @GET("beneficiary/GetBoothLeaders.php")
+    Call<List<BeneficiaryModel>> getboothLeaders(@Query("booth_no") int id);
 
 
 }

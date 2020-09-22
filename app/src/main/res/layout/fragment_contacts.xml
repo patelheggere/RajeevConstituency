@@ -38,7 +38,7 @@
     </RadioGroup>
 
     <LinearLayout
-        android:id="@+id/village_data"
+            android:id="@+id/village_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -59,6 +59,37 @@
         <TextView
             android:id="@+id/textViewTotal"
             android:layout_margin="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/booth_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rg_status">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="Boot No:"/>
+
+        <EditText
+            android:id="@+id/editText_booth_no"
+            android:layout_margin="8dp"
+            android:inputType="number"
+            android:maxLength="3"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/get_booth_data"
+            android:layout_margin="8dp"
+            android:text="GET DETAILs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 

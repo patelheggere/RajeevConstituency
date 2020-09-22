@@ -8,7 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +47,10 @@ public class ContactsFragment extends BaseFragment {
     private RecyclerView recyclerView;
     private TextView textViewTotal;
     private ProgressBar progressBar;
+    private RadioGroup radioGroup;
+    private LinearLayout village_data, boothDetails;
+    private EditText editTextBoothNo;
+    private Button buttonGetData;
 
     public ContactsFragment() {
         // Required empty public constructor
@@ -75,6 +83,11 @@ public class ContactsFragment extends BaseFragment {
         recyclerView = mView.findViewById(R.id.beneficaryRecyclerView);
         progressBar = mView.findViewById(R.id.progressbar);
         textViewTotal = mView.findViewById(R.id.textViewTotal);
+        radioGroup = mView.findViewById(R.id.rg_status);
+        village_data = mView.findViewById(R.id.village_data);
+        boothDetails = mView.findViewById(R.id.booth_data);
+        editTextBoothNo = mView.findViewById(R.id.editText_booth_no);
+        buttonGetData = mView.findViewById(R.id.get_booth_data);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         setUpNetwork();
         initListeners();
@@ -91,6 +104,72 @@ public class ContactsFragment extends BaseFragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId==R.id.beneficary)
+                {
+                    village_data.setVisibility(View.VISIBLE);
+                    boothDetails.setVisibility(View.INVISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                    if(villageName!=null && villageName.size()>0) {
+                        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, villageName);
+                        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        villageSpinner.setAdapter(dataAdapter);
+                    }
+                }
+                else
+                {
+                    recyclerView.setVisibility(View.GONE);
+                    village_data.setVisibility(View.INVISIBLE);
+                    boothDetails.setVisibility(View.VISIBLE);
+                    editTextBoothNo.setText("");
+                }
+            }
+        });
+        buttonGetData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(editTextBoothNo.getText()!=null && editTextBoothNo.getText().length()>0)
+                {
+                    getBoothData(Integer.parseInt(editTextBoothNo.getText().toString()));
+                }
+            }
+        });
+    }
+
+    private void getBoothData(int number) {
+        progressBar.setVisibility(View.VISIBLE);
+        Call<List<BeneficiaryModel>> listCall = apiInterface.getboothLeaders(number);
+        recyclerView.setVisibility(View.GONE);
+        listCall.enqueue(new Callback<List<BeneficiaryModel>>() {
+            @Override
+            public void onResponse(Call<List<BeneficiaryModel>> call, Response<List<BeneficiaryModel>> response) {
+                progressBar.setVisibility(View.GONE);
+                if(response.isSuccessful())
+                {
+                    if(response.body().size()>0)
+                    {
+                        textViewTotal.setText("Total:"+response.body().size());
+                        UsersAdapter usersAdapter = new UsersAdapter(getContext(), response.body());
+                        recyclerView.setAdapter(usersAdapter);
+                        recyclerView.setVisibility(View.VISIBLE);
+                    }
+                    else
+                    {
+                        Toast.makeText(getContext(), "No data found for this village", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<BeneficiaryModel>> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(getContext(), "Some thing wrong while fetching data", Toast.LENGTH_LONG).show();
 
             }
         });
