@@ -3,10 +3,13 @@ package com.patelheggere.rajeevconstituency.view.main;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +24,7 @@ import com.patelheggere.rajeevconstituency.view.main.fragments.WorkStatusFragmen
 
 public class MainActivity extends BaseActivity implements WorkStatusFragment.OnFragmentInteractionListener,
         NotificationFragment.OnFragmentInteractionListener,
-        NewsFragment.OnFragmentInteractionListener, ContactsFragment.OnFragmentInteractionListener{
+        NewsFragment.OnFragmentInteractionListener, ContactsFragment.OnFragmentInteractionListener {
 
     private static final String TAG = "MainActivity";
     private TextView mTextMessage;
@@ -36,17 +39,16 @@ public class MainActivity extends BaseActivity implements WorkStatusFragment.OnF
             //fragmentTransaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_in_right);
             Fragment curFrag = fragmentManager.getPrimaryNavigationFragment();
 
-            switch (item.getItemId())
-            {
+            switch (item.getItemId()) {
                 case R.id.navigation_home:
                     Log.d(TAG, "onNavigationItemSelected: ");
                     if (curFrag != null) {
                         fragmentTransaction.detach(curFrag);
                     }
-                    Fragment fragment = fragmentManager.findFragmentByTag("HOME");
+                    Fragment fragment = fragmentManager.findFragmentByTag("NEWS");
                     if (fragment == null) {
                         fragment = new NewsFragment();
-                        fragmentTransaction.add(R.id.contentFrame, fragment, "HOME");
+                        fragmentTransaction.add(R.id.contentFrame, fragment, "NEWS");
                     } else {
                         fragmentTransaction.attach(fragment);
                     }
@@ -56,47 +58,47 @@ public class MainActivity extends BaseActivity implements WorkStatusFragment.OnF
 
                     return true;
 
-                    case R.id.navigation_work:
-                        if (curFrag != null) {
-                            fragmentTransaction.detach(curFrag);
-                        }
-                        fragment = fragmentManager.findFragmentByTag("WORK");
-                        if (fragment == null) {
-                            fragment = new WorkStatusFragment();
-                            fragmentTransaction.add(R.id.contentFrame, fragment, "WORK");
-                        } else {
-                            fragmentTransaction.attach(fragment);
-                        }
-                        fragmentTransaction.setPrimaryNavigationFragment(fragment);
-                        fragmentTransaction.setReorderingAllowed(true);
-                        fragmentTransaction.commitNowAllowingStateLoss();
-                        // mTextMessage.setText(R.string.title_dashboard);
-                        return true;
-                    case R.id.navigation_notifications:
-                        if (curFrag != null) {
-                            fragmentTransaction.detach(curFrag);
-                        }
-                        fragment = fragmentManager.findFragmentByTag("NOTI");
-                        if (fragment == null) {
-                            fragment = new NotificationFragment();
-                            fragmentTransaction.add(R.id.contentFrame, fragment, "NOTI");
-                        } else {
-                            fragmentTransaction.attach(fragment);
-                        }
-                        fragmentTransaction.setPrimaryNavigationFragment(fragment);
-                        fragmentTransaction.setReorderingAllowed(true);
-                        fragmentTransaction.commitNowAllowingStateLoss();
-                        //mTextMessage.setText(R.string.title_notifications);
-                        return true;
-
-                case R.id.navigation_contacts:
+                case R.id.navigation_work:
+                    if (curFrag != null) {
+                        fragmentTransaction.detach(curFrag);
+                    }
+                    fragment = fragmentManager.findFragmentByTag("WORK");
+                    if (fragment == null) {
+                        fragment = new WorkStatusFragment();
+                        fragmentTransaction.add(R.id.contentFrame, fragment, "WORK");
+                    } else {
+                        fragmentTransaction.attach(fragment);
+                    }
+                    fragmentTransaction.setPrimaryNavigationFragment(fragment);
+                    fragmentTransaction.setReorderingAllowed(true);
+                    fragmentTransaction.commitNowAllowingStateLoss();
+                    // mTextMessage.setText(R.string.title_dashboard);
+                    return true;
+                case R.id.navigation_notifications:
                     if (curFrag != null) {
                         fragmentTransaction.detach(curFrag);
                     }
                     fragment = fragmentManager.findFragmentByTag("NOTI");
                     if (fragment == null) {
-                        fragment = new ContactsFragment();
+                        fragment = new NotificationFragment();
                         fragmentTransaction.add(R.id.contentFrame, fragment, "NOTI");
+                    } else {
+                        fragmentTransaction.attach(fragment);
+                    }
+                    fragmentTransaction.setPrimaryNavigationFragment(fragment);
+                    fragmentTransaction.setReorderingAllowed(true);
+                    fragmentTransaction.commitNowAllowingStateLoss();
+                    //mTextMessage.setText(R.string.title_notifications);
+                    return true;
+
+                case R.id.navigation_contacts:
+                    if (curFrag != null) {
+                        fragmentTransaction.detach(curFrag);
+                    }
+                    fragment = fragmentManager.findFragmentByTag("CONTACTS");
+                    if (fragment == null) {
+                        fragment = new ContactsFragment();
+                        fragmentTransaction.add(R.id.contentFrame, fragment, "CONTACTS");
                     } else {
                         fragmentTransaction.attach(fragment);
                     }
@@ -125,8 +127,7 @@ public class MainActivity extends BaseActivity implements WorkStatusFragment.OnF
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_home);
 
-        if(!id.equalsIgnoreCase("9620000944"))
-        {
+        if (!id.equalsIgnoreCase("9620000944")) {
             navigation.getMenu().removeItem(R.id.navigation_contacts);
         }
     }

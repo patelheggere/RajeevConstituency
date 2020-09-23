@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.patelheggere.rajeevconstituency.R;
@@ -35,6 +36,7 @@ public class WorkStatusFragment extends BaseFragment {
     private RadioGroup radioGroupType;
     private Button btnSubmit;
     private int type;
+    private TextView status;
 
     public WorkStatusFragment() {
         // Required empty public constructor
@@ -63,6 +65,7 @@ public class WorkStatusFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setUpNetwork();
         mView =  inflater.inflate(R.layout.fragment_work_status, container, false);
+        status = mView.findViewById(R.id.status);
         initView();
         return mView;
     }
@@ -103,7 +106,7 @@ public class WorkStatusFragment extends BaseFragment {
     }
 
     private void fetchStatus(int type) {
-
+        status.setVisibility(View.GONE);
         switch (type)
         {
             case 1:
@@ -113,7 +116,11 @@ public class WorkStatusFragment extends BaseFragment {
                     public void onResponse(Call<BeneficiaryModel> call, Response<BeneficiaryModel> response) {
                         if(response.body()!=null && response.body().getPurpose()!=null && response.body().getStatus()!=null)
                         {
-                            Toast.makeText(mActivity, response.body().getPurpose()+" "+response.body().getStatus(), Toast.LENGTH_LONG).show();
+
+                            String data = " Name:"+response.body().getName()+"\n Village:"+response.body().getVillage()+"\n Work Details:"+response.body().getPurpose()+"\n Status:"+response.body().getStatus();
+                            status.setText(data);
+                            status.setVisibility(View.VISIBLE);
+                            //Toast.makeText(mActivity, response.body().getPurpose()+" "+response.body().getStatus(), Toast.LENGTH_LONG).show();
                         }
 
                     }
@@ -131,7 +138,10 @@ public class WorkStatusFragment extends BaseFragment {
                     public void onResponse(Call<BeneficiaryModel> call, Response<BeneficiaryModel> response) {
                         if(response.body()!=null && response.body().getPurpose()!=null && response.body().getStatus()!=null)
                         {
-                            Toast.makeText(mActivity, response.body().getPurpose()+" "+response.body().getStatus(), Toast.LENGTH_LONG).show();
+                            String data = " Name:"+response.body().getName()+"\n Village:"+response.body().getVillage()+"\n Work Details:"+response.body().getPurpose()+"\n Status:"+response.body().getStatus();
+                            status.setText(data);
+                            status.setVisibility(View.VISIBLE);
+
                         }
 
                     }
@@ -150,7 +160,10 @@ public class WorkStatusFragment extends BaseFragment {
                     public void onResponse(Call<BeneficiaryModel> call, Response<BeneficiaryModel> response) {
                         if(response.body()!=null && response.body().getPurpose()!=null && response.body().getStatus()!=null)
                         {
-                            Toast.makeText(mActivity, response.body().getPurpose()+" "+response.body().getStatus(), Toast.LENGTH_LONG).show();
+                            String data = " Name:"+response.body().getName()+"\n Village:"+response.body().getVillage()+"\n Work Details:"+response.body().getPurpose()+"\n Status:"+response.body().getStatus();
+                            status.setText(data);
+                            status.setVisibility(View.VISIBLE);
+
                         }
 
                     }
