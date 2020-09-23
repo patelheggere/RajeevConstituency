@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.patelheggere.rajeevconstituency.R;
@@ -34,7 +35,9 @@ public class MainActivity extends BaseActivity implements WorkStatusFragment.OnF
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             //fragmentTransaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_in_right);
             Fragment curFrag = fragmentManager.getPrimaryNavigationFragment();
-            switch (item.getItemId()) {
+
+            switch (item.getItemId())
+            {
                 case R.id.navigation_home:
                     Log.d(TAG, "onNavigationItemSelected: ");
                     if (curFrag != null) {
@@ -104,10 +107,12 @@ public class MainActivity extends BaseActivity implements WorkStatusFragment.OnF
                     return true;
 
             }
+
             return false;
         }
     };
-
+    String id = "9620000944";
+    BottomNavigationView navigation;
 
     @Override
     protected int getContentView() {
@@ -116,9 +121,14 @@ public class MainActivity extends BaseActivity implements WorkStatusFragment.OnF
 
     @Override
     protected void initView() {
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_home);
+
+        if(!id.equalsIgnoreCase("9620000944"))
+        {
+            navigation.getMenu().removeItem(R.id.navigation_contacts);
+        }
     }
 
     @Override

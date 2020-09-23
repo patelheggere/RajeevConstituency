@@ -71,7 +71,7 @@ public class NewsFragment extends BaseFragment {
 
     private void getData() {
         databaseReference = RajeevApplication.getFireBaseRef();
-        databaseReference.child("News").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("news").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 newsModelList = new ArrayList<>();

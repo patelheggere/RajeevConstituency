@@ -1,6 +1,8 @@
 package com.patelheggere.rajeevconstituency.view.main.fragments;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -89,6 +92,8 @@ public class ContactsFragment extends BaseFragment {
         editTextBoothNo = mView.findViewById(R.id.editText_booth_no);
         buttonGetData = mView.findViewById(R.id.get_booth_data);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE},1);
+
         setUpNetwork();
         initListeners();
         getVillages();
@@ -142,6 +147,18 @@ public class ContactsFragment extends BaseFragment {
         });
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1 : {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                }
+            }
+        }
+    }
     private void getBoothData(int number) {
         progressBar.setVisibility(View.VISIBLE);
         Call<List<BeneficiaryModel>> listCall = apiInterface.getboothLeaders(number);
