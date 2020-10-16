@@ -24,7 +24,8 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void run() {
                 if(SharedPrefsHelper.getInstance().get("FIRST_TIME", true)) {
-                    Intent i = new Intent(SplashActivity.this, com.patelheggere.rajeevconstituency.view.welcome.WelcomeActivity.class);
+                   // Intent i = new Intent(SplashActivity.this, com.patelheggere.rajeevconstituency.view.welcome.WelcomeActivity.class);
+                    Intent i = new Intent(SplashActivity.this, MainActivity.class);
                     startActivity(i);
                 }
                 else {
@@ -36,7 +37,6 @@ public class SplashActivity extends BaseActivity {
                 finish();
 
             }
-
 
 
         }, THREE_SECOND);
