@@ -98,25 +98,7 @@ public class NotificationFragment extends BaseFragment {
         sendIntent.setPackage("com.whatsapp");
         mActivity.startActivity(sendIntent);
     }
-    void openWhatsappContact(String number) {
-        Uri uri = Uri.parse("smsto:" + number);
-        Intent i = new Intent(Intent.ACTION_SENDTO, uri);
-        i.setPackage("com.whatsapp");
-        String text = txtSpeechInput.getText().toString();
 
-        i.putExtra(Intent.EXTRA_TEXT, text);
-        mActivity.startActivity(Intent.createChooser(i, ""));
-    }
-    void send()
-    {
-        String text = txtSpeechInput.getText().toString();
-        Intent sendIntent = new Intent("android.intent.action.MAIN");
-        sendIntent.putExtra(Intent.EXTRA_TEXT, text);
-        sendIntent.setComponent(new ComponentName("com.whatsapp", "com.whatsapp.Conversation"));
-        sendIntent.putExtra("jid", PhoneNumberUtils.stripSeparators("919611620128") + "@s.whatsapp.net");//phone number without "+" prefix
-
-        mActivity.startActivity(sendIntent);
-    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -140,6 +122,7 @@ public class NotificationFragment extends BaseFragment {
         }
     }
 
+    String textTodisplay="";
     /**
      * Receiving speech input
      * */
@@ -151,14 +134,51 @@ public class NotificationFragment extends BaseFragment {
             case REQ_CODE_SPEECH_INPUT: {
                 if (resultCode == RESULT_OK && null != data) {
 
-                    ArrayList<String> result = data
-                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    txtSpeechInput.setText(result.get(0));
+                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                   String text = result.get(0);
+                   if(text.contains("ಮೊಬೈಲ್ ಸಂಖ್ಯೆ "))
+                   {
+                       textTodisplay+=extractInt(text)+"\n";
+                   }
+                   else if(text.contains("ಊರು"))
+                   {
+                       String[] place = text.split(" ");
+                       textTodisplay+=place[1]+"\n";
+
+                   }
+                   else if(text.contains("ಉದ್ದೇಶ"))
+                   {
+                       String[] place = text.split(" ");
+                       textTodisplay+=place[1]+"\n";
+                   }
+                    txtSpeechInput.setText((textTodisplay));
+
+                    //  txtSpeechInput.setText(result.get(0));
                 }
                 break;
             }
 
         }
+    }
+
+    public String extractInt(String str)
+    {
+        // Replacing every non-digit number
+        // with a space(" ")
+        str = str.replaceAll("[^\\d]", " ");
+
+        // Remove extra spaces from the beginning
+        // and the ending of the string
+        str = str.trim();
+
+        // Replace all the consecutive white
+        // spaces with a single space
+        str = str.replaceAll(" +", " ");
+
+        if (str.equals(""))
+            return "-1";
+
+        return str;
     }
     @Override
     public void onAttach(Context context) {
