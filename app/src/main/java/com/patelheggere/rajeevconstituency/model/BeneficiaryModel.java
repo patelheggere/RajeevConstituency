@@ -11,6 +11,9 @@ public class BeneficiaryModel implements Parcelable {
     private String village;
     private String status;
     private String designation;
+    private String photoURL;
+    private String imageData;
+    private String desgn;
 
     public BeneficiaryModel() {
     }
@@ -31,6 +34,7 @@ public class BeneficiaryModel implements Parcelable {
         mobile = in.readString();
         village = in.readString();
         status = in.readString();
+        imageData = in.readString();
     }
 
     @Override
@@ -41,6 +45,7 @@ public class BeneficiaryModel implements Parcelable {
         dest.writeString(mobile);
         dest.writeString(village);
         dest.writeString(status);
+        dest.writeString(imageData);
     }
 
     @Override
@@ -114,5 +119,21 @@ public class BeneficiaryModel implements Parcelable {
 
     public void setDesignation(String designation) {
         this.designation = designation;
+    }
+
+    public String getPhotoURL() {
+        return photoURL;
+    }
+
+    public void setPhotoURL(String photoURL) {
+        this.photoURL = photoURL;
+    }
+
+    public String getImageData() {
+        return imageData;
+    }
+
+    public void setImageData(String imageData) {
+        this.imageData = imageData;
     }
 }

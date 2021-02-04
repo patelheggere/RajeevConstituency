@@ -5,24 +5,112 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/btnSpeak"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/lytName"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_btn_speak_now"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="8dp"
+        android:weightSum="6"
+        android:padding="8dp">
+        <EditText
+            android:id="@+id/textViewName"
+            android:layout_width="0dp"
+            android:hint="Name"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"/>
 
-    <TextView
-        android:id="@+id/txtSpeechInput"
-        android:layout_width="wrap_content"
+        <ImageButton
+            android:layout_weight="1"
+            android:id="@+id/btnNameSpeak"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_btn_speak_now"
+         />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lytPlace"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Coming soon"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSpeak" />
+        app:layout_constraintTop_toBottomOf="@+id/lytName"
+        android:layout_margin="8dp"
+        android:weightSum="6"
+        android:padding="8dp">
+        <EditText
+            android:id="@+id/textViewPlace"
+            android:layout_width="0dp"
+            android:hint="Place"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"/>
+
+        <ImageButton
+            android:layout_weight="1"
+            android:id="@+id/btnPlaceSpeak"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_btn_speak_now"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/lytMobile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lytPlace"
+        android:layout_margin="8dp"
+        android:weightSum="6"
+        android:padding="8dp">
+        <EditText
+            android:id="@+id/textViewMobile"
+            android:layout_width="0dp"
+            android:hint="Mobile"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"/>
+
+        <ImageButton
+            android:layout_weight="1"
+            android:id="@+id/btnMobileSpeak"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_btn_speak_now"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lytPurpose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lytMobile"
+        android:layout_margin="8dp"
+        android:weightSum="6"
+        android:padding="8dp">
+        <EditText
+            android:id="@+id/textViewPurpose"
+            android:layout_width="0dp"
+            android:hint="Purpose"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"/>
+
+        <ImageButton
+            android:layout_weight="1"
+            android:id="@+id/btnPurposeSpeak"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_btn_speak_now"
+            />
+    </LinearLayout>
+
+
 
     <Button
         android:id="@+id/send"
@@ -32,6 +120,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtSpeechInput" />
+        app:layout_constraintTop_toBottomOf="@+id/lytPlace" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

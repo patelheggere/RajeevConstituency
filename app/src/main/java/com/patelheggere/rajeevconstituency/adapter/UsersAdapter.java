@@ -4,8 +4,11 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.text.format.DateUtils;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.patelheggere.rajeevconstituency.R;
 import com.patelheggere.rajeevconstituency.model.BeneficiaryModel;
+import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -64,7 +68,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.MyViewHolder
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView time, phone, url, name, desi;
-        ImageView imageView;
+        ImageView imageView, imageViewPhoto;
         private LinearLayout mShareCommentLayout;
         private LinearLayout mLinearLayoutLike, mLinearLayoutComment, mLinearLayoutShare, mLinearLayoutPlace;
         private TextView mTextViewLikeCount, mTextViewShareCount, mTextViewCommentCount, textViewPlace;
@@ -72,10 +76,11 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.MyViewHolder
         CircleImageView circleImageView;
         MyViewHolder(View view) {
             super(view);
-            phone = (TextView)itemView.findViewById(R.id.textViewPhone);
-            name = (TextView)itemView.findViewById(R.id.textViewName);
-            imageView = itemView.findViewById(R.id.textCall);
-            desi = itemView.findViewById(R.id.desi);
+            phone = (TextView)view.findViewById(R.id.textViewPhone);
+            name = (TextView)view.findViewById(R.id.textViewName);
+            imageView = view.findViewById(R.id.textCall);
+            desi = view.findViewById(R.id.desi);
+            imageViewPhoto = view.findViewById(R.id.photo);
         }
     }
 
@@ -111,6 +116,16 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.MyViewHolder
                     context.startActivity(phoneIntent);
                 }
             });
+            if(dataModel.getPhotoURL()!=null)
+            {
+                Picasso.with(context).load(dataModel.getPhotoURL()).into(holder.imageViewPhoto);
+            }
+            else if(dataModel.getImageData()!=null)
+            {
+                byte[] decodedString = Base64.decode(dataModel.getImageData(), Base64.DEFAULT);
+                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                holder.imageViewPhoto.setImageBitmap(decodedByte);
+            }
         }catch (Exception e){
             e.printStackTrace();
         }

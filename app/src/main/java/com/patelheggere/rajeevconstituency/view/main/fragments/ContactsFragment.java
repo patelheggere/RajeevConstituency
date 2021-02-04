@@ -54,6 +54,7 @@ public class ContactsFragment extends BaseFragment {
     private LinearLayout village_data, boothDetails;
     private EditText editTextBoothNo;
     private Button buttonGetData;
+    private String selectedType = "leaders";
 
     public ContactsFragment() {
         // Required empty public constructor
@@ -104,7 +105,12 @@ public class ContactsFragment extends BaseFragment {
         villageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                getDataByvillage(villageName.get(position));
+                if(selectedType.equalsIgnoreCase("leaders")){
+                    getDataByvillage(villageName.get(position), 2);
+                }
+                else {
+                    getDataByvillage(villageName.get(position), 1);
+                }
             }
 
             @Override
@@ -126,6 +132,13 @@ public class ContactsFragment extends BaseFragment {
                         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         villageSpinner.setAdapter(dataAdapter);
                     }
+                    selectedType = "beneficiary";
+                }
+                else if(checkedId==R.id.leaders){
+                    village_data.setVisibility(View.VISIBLE);
+                    boothDetails.setVisibility(View.INVISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                    selectedType = "leaders";
                 }
                 else
                 {
@@ -192,9 +205,9 @@ public class ContactsFragment extends BaseFragment {
         });
     }
 
-    private void getDataByvillage(String s) {
+    private void getDataByvillage(String s, int type) {
         progressBar.setVisibility(View.VISIBLE);
-        Call<List<BeneficiaryModel>> listCall = apiInterface.getByDataByVillage(s);
+        Call<List<BeneficiaryModel>> listCall = apiInterface.getByDataByVillage(s, type+"");
         recyclerView.setVisibility(View.GONE);
         listCall.enqueue(new Callback<List<BeneficiaryModel>>() {
             @Override

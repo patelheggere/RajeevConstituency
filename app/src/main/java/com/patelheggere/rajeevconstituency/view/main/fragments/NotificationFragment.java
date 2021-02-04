@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +36,9 @@ public class NotificationFragment extends BaseFragment {
     private ImageButton btnSpeak;
     private Button sendMesage;
     private final int REQ_CODE_SPEECH_INPUT = 100;
+
+    private EditText editTextName, editTextPhone, editTextPlace, editTextPurpose;
+    private ImageButton btnName, btnPhone, btnPlace, btnPurpose;
 
     public NotificationFragment() {
         // Required empty public constructor
@@ -63,19 +67,53 @@ public class NotificationFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mView =  inflater.inflate(R.layout.fragment_notification_layout, container, false);
-        txtSpeechInput = mView.findViewById(R.id.txtSpeechInput);
-        btnSpeak = mView.findViewById(R.id.btnSpeak);
+        editTextName = mView.findViewById(R.id.textViewName);
+        editTextPhone = mView.findViewById(R.id.textViewMobile);
+        editTextPlace = mView.findViewById(R.id.textViewPlace);
+        editTextPurpose = mView.findViewById(R.id.textViewPurpose);
+
+        btnName = mView.findViewById(R.id.btnNameSpeak);
+        btnPlace = mView.findViewById(R.id.btnPlaceSpeak);
+        btnPhone = mView.findViewById(R.id.btnMobileSpeak);
+        btnPurpose= mView.findViewById(R.id.btnPurposeSpeak);
+
         sendMesage = mView.findViewById(R.id.send);
 
 
-        btnSpeak.setOnClickListener(new View.OnClickListener() {
+
+
+        btnName.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                promptSpeechInput();
+                promptSpeechInput(1);
             }
         });
 
+        btnPlace.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                promptSpeechInput(2);
+            }
+        });
+
+        btnPhone.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                promptSpeechInput(3);
+            }
+        });
+
+
+        btnPurpose.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                promptSpeechInput(4);
+            }
+        });
 
         sendMesage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +128,27 @@ public class NotificationFragment extends BaseFragment {
 
     void sendgroup()
     {
-        String text = txtSpeechInput.getText().toString();
+        if(editTextName.getText()==null || editTextName.getText().toString().trim().isEmpty())
+        {
+            Toast.makeText(getContext(), "Speak or type Name", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(editTextPurpose.getText()==null || editTextPurpose.getText().toString().trim().isEmpty())
+        {
+            Toast.makeText(getContext(), "Speak or type Purpose", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(editTextPhone.getText()==null || editTextPhone.getText().toString().trim().isEmpty())
+        {
+            Toast.makeText(getContext(), "Speak or type Phone Number", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(editTextPlace.getText()==null || editTextPlace.getText().toString().trim().isEmpty())
+        {
+            Toast.makeText(getContext(), "Speak or type Place", Toast.LENGTH_LONG).show();
+            return;
+        }
+        String text = "Name:"+editTextName.getText().toString() +"\nPlace:"+editTextPlace.getText().toString()+"\nContact Number:"+editTextPhone.getText().toString()+"\nPurpose:"+editTextPurpose.getText().toString();
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, text);
@@ -109,10 +167,13 @@ public class NotificationFragment extends BaseFragment {
     /**
      * Showing google speech input dialog
      * */
-    private void promptSpeechInput() {
+    private int SelectedType;
+    private void promptSpeechInput(int type) {
+        SelectedType = type;
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        if(type!=3)
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "kn-IN");
 
         try {
@@ -136,22 +197,18 @@ public class NotificationFragment extends BaseFragment {
 
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                    String text = result.get(0);
-                   if(text.contains("ಮೊಬೈಲ್ ಸಂಖ್ಯೆ "))
-                   {
-                       textTodisplay+=extractInt(text)+"\n";
+                   if(text!=null) {
+                       if (SelectedType == 1) {
+                           editTextName.setText(text);
+                       } else if (SelectedType == 2) {
+                           editTextPlace.setText(text);
+                       } else if (SelectedType == 3) {
+                           text = text.replaceAll("\\s", "");
+                           editTextPhone.setText(text.trim());
+                       } else if (SelectedType == 4) {
+                           editTextPurpose.setText(text);
+                       }
                    }
-                   else if(text.contains("ಊರು"))
-                   {
-                       String[] place = text.split(" ");
-                       textTodisplay+=place[1]+"\n";
-
-                   }
-                   else if(text.contains("ಉದ್ದೇಶ"))
-                   {
-                       String[] place = text.split(" ");
-                       textTodisplay+=place[1]+"\n";
-                   }
-                    txtSpeechInput.setText((textTodisplay));
 
                     //  txtSpeechInput.setText(result.get(0));
                 }

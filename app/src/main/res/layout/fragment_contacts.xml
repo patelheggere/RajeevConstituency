@@ -25,16 +25,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
         <RadioButton
-            android:id="@+id/beneficary"
+            android:id="@+id/leaders"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="@string/beneficiary"/>
+            android:text="@string/leaders"/>
         <RadioButton
             android:id="@+id/workers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/workers"/>
+        <RadioButton
+            android:id="@+id/beneficary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/beneficiary"/>
+
     </RadioGroup>
 
     <LinearLayout

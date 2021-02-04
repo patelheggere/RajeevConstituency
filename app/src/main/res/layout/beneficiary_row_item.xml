@@ -12,18 +12,23 @@
         android:gravity="center_vertical"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:weightSum="3">
-
+        android:weightSum="3"
+        android:orientation="horizontal">
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.5"
+            android:layout_weight="2.25"
+            android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/textViewName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="name" />
+                android:textStyle="bold"
+                tools:text="Veerendra Patel" />
             <TextView
                 android:id="@+id/desi"
                 android:layout_width="match_parent"
@@ -32,20 +37,37 @@
                 />
 
         </LinearLayout>
-
+        <LinearLayout
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
         <TextView
             android:id="@+id/textViewPhone"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            tools:text="name" />
+            tools:text="9611620128" />
 
         <ImageView
             android:id="@+id/textCall"
-            android:layout_width="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
             android:src="@android:drawable/ic_menu_call"
             app:tint="@color/colorAccent" />
+        </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".75">
+            <ImageView
+                android:id="@+id/photo"
+                android:padding="3dp"
+                android:src="@color/bg_screen1"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
+        </LinearLayout>
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>
