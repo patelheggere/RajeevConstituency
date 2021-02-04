@@ -21,8 +21,16 @@ import android.widget.Toast;
 
 import com.patelheggere.rajeevconstituency.R;
 import com.patelheggere.rajeevconstituency.base.BaseFragment;
+import com.patelheggere.rajeevconstituency.model.APIResponseModel;
+import com.patelheggere.rajeevconstituency.model.UploadDataModel;
+import com.patelheggere.rajeevconstituency.network.ApiInterface;
+import com.patelheggere.rajeevconstituency.network.RetrofitInstance;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 import static java.security.AccessController.getContext;
@@ -80,7 +88,7 @@ public class NotificationFragment extends BaseFragment {
         sendMesage = mView.findViewById(R.id.send);
 
 
-
+        setUpNetwork();
 
         btnName.setOnClickListener(new View.OnClickListener() {
 
@@ -149,15 +157,48 @@ public class NotificationFragment extends BaseFragment {
             return;
         }
         String text = "Name:"+editTextName.getText().toString() +"\nPlace:"+editTextPlace.getText().toString()+"\nContact Number:"+editTextPhone.getText().toString()+"\nPurpose:"+editTextPurpose.getText().toString();
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, text);
-        sendIntent.setType("text/plain");
-        sendIntent.setPackage("com.whatsapp");
-        mActivity.startActivity(sendIntent);
+
+       UploadDataModel dataModel = new UploadDataModel();
+       dataModel.setName(editTextName.getText().toString().trim());
+        dataModel.setVillage(editTextPlace.getText().toString().trim());
+        dataModel.setMobile(editTextPhone.getText().toString().trim());
+        dataModel.setPurpose(editTextPurpose.getText().toString().trim());
+        uploadToServer(dataModel, text);
+
+    }
+
+    private void uploadToServer(UploadDataModel uploadDataModel, final String text) {
+        Call<APIResponseModel> call = apiInterface.Uplaod(uploadDataModel);
+        call.enqueue(new Callback<APIResponseModel>() {
+            @Override
+            public void onResponse(Call<APIResponseModel> call, Response<APIResponseModel> response) {
+                if(response.body().isStatus())
+                {
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, text);
+                    sendIntent.setType("text/plain");
+                    sendIntent.setPackage("com.whatsapp");
+                    mActivity.startActivity(sendIntent);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<APIResponseModel> call, Throwable t) {
+
+            }
+        });
     }
 
 
+    private ApiInterface apiInterface;
+
+    private void setUpNetwork()
+    {
+        RetrofitInstance retrofitInstance = new RetrofitInstance();
+        retrofitInstance.setClient();
+        apiInterface = retrofitInstance.getClient().create(ApiInterface.class);
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
